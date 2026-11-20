@@ -3,577 +3,69 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>CineVault | Every Movie Has a Home</title>
-
+<title>CineVault - Every movie has a home</title>
 <style>
-
-/* ===== COLOUR THEME ===== */
-
-:root {
-  --accent: #9673D1;
-  --accent-dark: #7652AE;
-  --background: #F3EDFF;
-  --card: #FFFFFF;
-  --text: #302344;
-  --muted: #80738F;
-  --shadow: rgba(100, 70, 150, 0.12);
-}
-
-body.dark {
-  --accent: #B18AE8;
-  --accent-dark: #9673D1;
-  --background: #171326;
-  --card: #29213D;
-  --text: #FFFFFF;
-  --muted: #C8B9DF;
-  --shadow: rgba(0, 0, 0, 0.3);
-}
-
-/* ===== GENERAL STYLING ===== */
-
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  padding: 20px;
-  font-family: Arial, sans-serif;
-  background: var(--background);
-  color: var(--text);
-  transition: 0.3s;
-}
-
-button, input, select {
-  font-family: inherit;
-}
-
-/* ===== HEADER ===== */
-
-header {
-  text-align: center;
-  padding: 25px 10px;
-}
-
-.logo {
-  font-size: 38px;
-  font-weight: bold;
-  color: var(--accent-dark);
-  margin-bottom: 8px;
-}
-
-.tagline {
-  color: var(--muted);
-  font-size: 15px;
-}
-
-.movie-count {
-  color: var(--accent-dark);
-  font-size: 13px;
-  font-weight: bold;
-}
-
-/* ===== CONTROLS ===== */
-
-.controls {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin: 25px auto;
-  max-width: 1000px;
-}
-
-input, select {
-  padding: 12px 16px;
-  border: 1px solid #D9C8F5;
-  border-radius: 25px;
-  outline: none;
-  background: var(--card);
-  color: var(--text);
-  font-size: 14px;
-}
-
-input:focus, select:focus {
-  border-color: var(--accent);
-}
-
-#search {
-  width: 260px;
-  max-width: 100%;
-}
-
-/* ===== BUTTONS ===== */
-
-button {
-  background: var(--accent);
-  color: white;
-  border: none;
-  padding: 11px 18px;
-  border-radius: 25px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.2s;
-}
-
-button:hover {
-  background: var(--accent-dark);
-  transform: scale(1.03);
-}
-
-/* ===== MOVIE COLLECTION ===== */
-
-#movieContainer {
-  display: grid;
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(210px, 1fr)
-  );
-  gap: 25px;
-  max-width: 1100px;
-  margin: 30px auto;
-}
-
-/* ===== MOVIE CARDS ===== */
-
-.card {
-  background: var(--card);
-  border-radius: 18px;
-  overflow: hidden;
-  box-shadow: 0 5px 18px var(--shadow);
-  transition: 0.3s;
-}
-
-.card:hover {
-  transform: translateY(-7px);
-}
-
-.poster {
-  width: 100%;
-  height: 300px;
-  object-fit: cover;
-  background: #E5D9F5;
-}
-
-.card-content {
-  padding: 16px;
-  text-align: center;
-}
-
-.card h2 {
-  font-size: 19px;
-  margin: 5px 0;
-}
-
-.details {
-  font-size: 13px;
-  color: var(--muted);
-}
-
-.rating {
-  color: #B18AE8;
-  font-size: 19px;
-  margin: 12px;
-}
-
-.description {
-  font-size: 14px;
-  color: var(--muted);
-  min-height: 35px;
-}
-
-.status {
-  margin-top: 10px;
-  width: 100%;
-}
-
-/* ===== EMPTY SEARCH ===== */
-
-.empty {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 40px;
-  color: var(--muted);
-}
-
-/* ===== FOOTER ===== */
-
-footer {
-  text-align: center;
-  margin: 55px 0 15px;
-  color: var(--muted);
-  font-size: 13px;
-}
-
-/* ===== MOBILE DESIGN ===== */
-
-@media(max-width: 500px) {
-
-  body {
-    padding: 12px;
-  }
-
-  .logo {
-    font-size: 30px;
-  }
-
-  #movieContainer {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-  }
-
-  .poster {
-    height: 220px;
-  }
-
-  .card-content {
-    padding: 10px;
-  }
-
-  .card h2 {
-    font-size: 16px;
-  }
-
-  .controls {
-    gap: 8px;
-  }
-
-  #search {
-    width: 100%;
-  }
-}
-
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{background:#f8f9ff;color:#222;padding:20px}
+body.dark{background:#12121c;color:#fff}
+header{max-width:1100px;margin:0 auto 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.logo{font-size:32px;font-weight:900;color:#4a4de6}
+.logo span{font-size:14px;font-weight:400;color:#888;display:block}
+button{cursor:pointer;border:0;border-radius:999px;padding:10px 18px;font-weight:700}
+.dark-btn{background:#aab0ff;color:#222}
+.controls{max-width:1100px;margin:0 auto 20px;display:flex;gap:10px;flex-wrap:wrap}
+.controls input,.controls select{padding:12px 16px;border:1px solid #ddd;border-radius:999px;flex:1;min-width:180px}
+.grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:18px}
+.card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.08)}
+body.dark .card{background:#1e1e2e}
+.card img{width:100%;height:270px;object-fit:cover;display:block;background:#ddd}
+.card-body{padding:12px}
+.card-body h3{font-size:16px;margin-bottom:4px}
+.card-body p{font-size:13px;color:#777}
+.badge{display:inline-block;background:#ffeef0;color:#d6336c;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:700;margin-top:8px}
+footer{text-align:center;color:#999;margin-top:30px;font-size:13px}
 </style>
 </head>
-
 <body>
-
-<!-- ===== HEADER ===== -->
-
 <header>
-
-  <div class="logo">
-    🎬 CineVault
-  </div>
-
-  <p class="tagline">
-    Every movie has a home. 💜
-  </p>
-
-  <p class="movie-count" id="movieCount"></p>
-
+<div class="logo">🎬 CineVault<span>Every movie has a home 💙</span></div>
+<button class="dark-btn" onclick="document.body.classList.toggle('dark')">🌙 Dark Mode</button>
 </header>
-
-
-<!-- ===== SEARCH AND FILTERS ===== -->
-
 <div class="controls">
-
-  <input
-    type="text"
-    id="search"
-    placeholder="🔍 Search for a movie..."
-  >
-
-  <select id="category">
-    <option value="all">All Categories</option>
-    <option value="Animated">Animated</option>
-    <option value="Rom-Com">Rom-Com</option>
-  </select>
-
-  <select id="statusFilter">
-    <option value="all">All Movies</option>
-    <option value="Watched">Watched</option>
-    <option value="Want to Watch">Want to Watch</option>
-  </select>
-
-  <button onclick="toggleDarkMode()" id="themeButton">
-    🌙 Dark Mode
-  </button>
-
+<input id="search" placeholder="🔍 Search for a movie..." oninput="render()">
+<select id="cat" onchange="render()"><option value="All">All Categories</option><option value="Animated">Animated</option></select>
+<select id="sort" onchange="render()"><option value="All">All Movies</option><option value="Top">Top Rated</option></select>
 </div>
-
-
-<!-- ===== MOVIE COLLECTION ===== -->
-
-<div id="movieContainer"></div>
-
-
-<!-- ===== FOOTER ===== -->
-
-<footer>
-  Curated with 💜 by CineVault
-  <br><br>
-  Discover • Watch • Remember
-</footer>
-
-
-<!-- ===== JAVASCRIPT ===== -->
-
+<div class="grid" id="grid"></div>
+<footer>Curated with 💙 by CineVault</footer>
 <script>
-
-// MOVIE DATABASE
-
-const movies = [
-
-  {
-    title: "Coco",
-    category: "Animated",
-    year: 2017,
-    rating: 8.4,
-    description: "A beautiful story about family and music.",
-    poster: "https://image.tmdb.org/t/p/w500/gGEsBPAijhVUFoiNpgZXqRVWJt2.jpg"
-  },
-
-  {
-    title: "Notting Hill",
-    category: "Rom-Com",
-    year: 1999,
-    rating: 7.2,
-    description: "A charming love story in London.",
-    poster: "https://image.tmdb.org/t/p/w500/l5uxY5m5OInWpcExIpKG6AR3rgL.jpg"
-  },
-
-  {
-    title: "Inside Out 2",
-    category: "Animated",
-    year: 2024,
-    rating: 7.6,
-    description: "All the emotions are back!",
-    poster: "https://image.tmdb.org/t/p/w500/vpnVM9B6NMmQpWeZvzLvDESb2QY.jpg"
-  },
-
-  {
-    title: "Tangled",
-    category: "Animated",
-    year: 2010,
-    rating: 7.7,
-    description: "A magical adventure with Rapunzel.",
-    poster: "https://image.tmdb.org/t/p/w500/ym7Kst6a4uodryxqbGOxmewF235.jpg"
-  },
-
- {
-  title: "The Princess and the Frog",
-  category: "Animated",
-  year: 2009,
-  rating: 7.1,
-  description: "A princess, a dream and a little magic.",
-https://upload.wikimedia.org/wikipedia/en/8/81/The_Princess_and_the_Frog_poster.jpg},
-  {
-    title: "Enchanted",
-    category: "Rom-Com",
-    year: 2007,
-    rating: 7.1,
-    description: "Fairytale magic meets real life.",
-    poster: "https://image.tmdb.org/t/p/w500/8KCNzCArLlvLdQoHx6npua2VSVc.jpg"
-  }
-
+const movies=[
+{title:"Moana",year:2016,category:"Animated",rating:7.6,poster:"https://image.tmdb.org/t/p/w500/4Iu5f2nv7huqJv1fTRK7M0R6T.jpg",desc:"A brave girl sails across the ocean to save her island."},
+{title:"Mulan",year:1998,category:"Animated",rating:7.6,poster:"https://image.tmdb.org/t/p/w500/5TYgKxYd1Fh5YF0F.jpg",desc:"A brave young woman takes her father's place in the army."},
+{title:"Brave",year:2012,category:"Animated",rating:7.1,poster:"https://image.tmdb.org/t/p/w500/jQpjIr4W4U8f5C8YPouDAcHoVuE.jpg",desc:"A Scottish princess must break a spell."},
+{title:"Zootopia",year:2016,category:"Animated",rating:8.0,poster:"https://image.tmdb.org/t/p/w500/esbfojkHBEyMlIcv2VGW3fCzlzH.jpg",desc:"A bunny cop and a fox team up."},
+{title:"Ratatouille",year:2007,category:"Animated",rating:8.0,poster:"https://image.tmdb.org/t/p/w500/t3vaWRPSYH8Sx9dXh9q7k8M61k.jpg",desc:"A rat who dreams of becoming a chef in Paris."},
+{title:"Coco",year:2017,category:"Animated",rating:8.4,poster:"https://image.tmdb.org/t/p/w500/gGEsAgQTvD5YQ89bSx5MCRWnD5k.jpg",desc:"A boy journeys to the Land of the Dead."},
+{title:"Tangled",year:2010,category:"Animated",rating:7.7,poster:"https://image.tmdb.org/t/p/w500/ym7Kst6a4uodryxO9nX0m3dFg.jpg",desc:"Rapunzel escapes her tower."},
+{title:"Beauty and the Beast",year:1991,category:"Animated",rating:8.0,poster:"https://image.tmdb.org/t/p/w500/5ed6d2f66767dfc5ea3cba16504d9b.jpg",desc:"Belle falls for a prince trapped as a Beast."},
+{title:"How to Train Your Dragon",year:2010,category:"Animated",rating:8.1,poster:"https://image.tmdb.org/t/p/w500/xvYxM7JcRCK2C5Q8vYhZ8sC1E.jpg",desc:"Hiccup befriends a Night Fury dragon."},
+{title:"Spider-Man: Into the Spider-Verse",year:2018,category:"Animated",rating:8.4,poster:"https://image.tmdb.org/t/p/w500/5AxLiAVJ4qxGDqoudHKHQNCmCgd.jpg",desc:"Miles Morales becomes Spider-Man."},
+{title:"Inside Out",year:2015,category:"Animated",rating:8.1,poster:"https://image.tmdb.org/t/p/w500/aAmfIX3TT40zUHVTuB7kV9HhC0H.jpg",desc:"Emotions inside a girl's mind go on an adventure."},
+{title:"The Lion King",year:1994,category:"Animated",rating:8.5,poster:"https://image.tmdb.org/t/p/w500/sKCr78MXSLixwmZ8DyJLrpMsd15.jpg",desc:"Simba must reclaim his place as king."},
+{title:"Up",year:2009,category:"Animated",rating:8.2,poster:"https://image.tmdb.org/t/p/w500/vpbaStTMt8qqXaEgnOR2EE4DNt.jpg",desc:"An old man flies his house to Paradise Falls."},
+{title:"Toy Story",year:1995,category:"Animated",rating:8.3,poster:"https://image.tmdb.org/t/p/w500/uXDfjJbdP4ijW5hWSBrPrlKpx.jpg",desc:"Woody and Buzz learn to be friends."},
+{title:"Finding Nemo",year:2003,category:"Animated",rating:8.1,poster:"https://image.tmdb.org/t/p/w500/eLxPgjSMPJQw5BZz2yE9y8Xz.jpg",desc:"A clownfish searches the ocean for his son."},
+{title:"Shrek",year:2001,category:"Animated",rating:7.9,poster:"https://image.tmdb.org/t/p/w500/iBholKfT2G7a3P0h5YF0F.jpg",desc:"An ogre goes on a quest to save a princess."}
 ];
-
-
-// LOAD SAVED WATCH STATUS
-
-let watched = JSON.parse(
-  localStorage.getItem("cineVaultStatuses") || "{}"
-);
-
-
-// DISPLAY MOVIES
-
-function displayMovies() {
-
-  const search = document
-    .getElementById("search")
-    .value.toLowerCase();
-
-  const category = document
-    .getElementById("category").value;
-
-  const statusFilter = document
-    .getElementById("statusFilter").value;
-
-  const container = document
-    .getElementById("movieContainer");
-
-  const filtered = movies.filter(movie => {
-
-    const movieStatus =
-      watched[movie.title] || "Want to Watch";
-
-    return (
-
-      movie.title.toLowerCase().includes(search) &&
-
-      (
-        category === "all" ||
-        movie.category === category
-      ) &&
-
-      (
-        statusFilter === "all" ||
-        movieStatus === statusFilter
-      )
-
-    );
-
-  });
-
-
-  document.getElementById("movieCount").textContent =
-    `${filtered.length} movies in your collection`;
-
-
-  if (filtered.length === 0) {
-
-    container.innerHTML = `
-      <p class="empty">
-        No movies found. Try another search! 💜
-      </p>
-    `;
-
-    return;
-
-  }
-
-
-  container.innerHTML = filtered.map(movie => {
-
-    const status =
-      watched[movie.title] || "Want to Watch";
-
-
-    return `
-
-      <div class="card">
-
-        <img
-          class="poster"
-          src="${movie.poster}"
-          alt="${movie.title} poster"
-          onerror="this.onerror=null;this.src='https://placehold.co/400x600/9673D1/FFFFFF?text=Movie+Poster';"
-        >
-
-        <div class="card-content">
-
-          <h2>${movie.title}</h2>
-
-          <p class="details">
-            ${movie.category} • ${movie.year}
-          </p>
-
-          <p class="rating">
-            ⭐ ${movie.rating}/10
-          </p>
-
-          <p class="description">
-            ${movie.description}
-          </p>
-
-          <button
-            class="status"
-            onclick="toggleWatched('${movie.title}')"
-          >
-            ${
-              status === "Watched"
-              ? "Watched ✅"
-              : "Want to Watch 👀"
-            }
-          </button>
-
-        </div>
-
-      </div>
-
-    `;
-
-  }).join("");
-
+function render(){
+let q=document.getElementById('search').value.toLowerCase();
+let c=document.getElementById('cat').value;
+let s=document.getElementById('sort').value;
+let list=movies.filter(m=>(c==="All"||m.category===c)&&m.title.toLowerCase().includes(q));
+if(s==="Top") list=list.slice().sort((a,b)=>b.rating-a.rating);
+document.getElementById('grid').innerHTML=list.map(m=>'<div class="card"><img src="'+m.poster+'" alt="'+m.title+'"><div class="card-body"><h3>'+m.title+'</h3><p>'+m.year+' - ⭐ '+m.rating+'</p><p>'+m.desc+'</p><span class="badge">'+m.category+'</span></div></div>').join('');
 }
-
-
-// CHANGE WATCH STATUS
-
-function toggleWatched(title) {
-
-  const current =
-    watched[title] || "Want to Watch";
-
-
-  watched[title] =
-    current === "Watched"
-    ? "Want to Watch"
-    : "Watched";
-
-
-  localStorage.setItem(
-    "cineVaultStatuses",
-    JSON.stringify(watched)
-  );
-
-
-  displayMovies();
-
-}
-
-
-// DARK MODE
-
-function toggleDarkMode() {
-
-  document.body.classList.toggle("dark");
-
-  const isDark =
-    document.body.classList.contains("dark");
-
-  localStorage.setItem(
-    "cineVaultDarkMode",
-    isDark
-  );
-
-  document.getElementById("themeButton").textContent =
-    isDark ? "☀️ Light Mode" : "🌙 Dark Mode";
-
-}
-
-
-// RESTORE DARK MODE
-
-if (
-  localStorage.getItem("cineVaultDarkMode") === "true"
-) {
-
-  document.body.classList.add("dark");
-
-  document.getElementById("themeButton").textContent =
-    "☀️ Light Mode";
-
-}
-
-
-// SEARCH FUNCTION
-
-document.getElementById("search")
-  .addEventListener("input", displayMovies);
-
-
-// CATEGORY FILTER
-
-document.getElementById("category")
-  .addEventListener("change", displayMovies);
-
-
-// WATCH STATUS FILTER
-
-document.getElementById("statusFilter")
-  .addEventListener("change", displayMovies);
-
-
-// START WEBSITE
-
-displayMovies();
-
+render();
 </script>
-
 </body>
 </html>
