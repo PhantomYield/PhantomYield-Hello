@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>CineVault</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>🎬 CineVault - My Movie Watchlist</h1>
+<button id="darkBtn" onclick="toggleDark()">🌙 Dark Mode</button>
+<br>
+<input type="text" id="search" placeholder="🔍 Search a movie..." onkeyup="searchMovie()">
+
+<div id="movies">
+  <div class="card">
+    <img src="https://image.tmdb.org/t/p/w500/gGEsBPAijhVUFoiNpgZXqRVW2B.jpg">
+    <h2>Coco</h2>
+    <p>Animated • 2017</p>
+    <p class="rating">⭐ 8.4</p>
+    <button>Watched ✅</button>
+  </div>
+
+  <div class="card">
+    <img src="https://image.tmdb.org/t/p/w500/vpnVM9B6NMmQpWeZvzLvDESb2QY.jpg">
+    <h2>Inside Out 2</h2>
+    <p>Animated • 2024</p>
+    <p class="rating">⭐ 7.6</p>
+    <button>Want to Watch 👀</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
