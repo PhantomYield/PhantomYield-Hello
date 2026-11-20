@@ -31,49 +31,25 @@ footer{text-align:center;color:#999;margin-top:30px;font-size:13px}
 <div class="logo">🎬 CineVault<span>Every movie has a home 💙</span></div>
 <button class="dark-btn" onclick="document.body.classList.toggle('dark')">🌙 Dark Mode</button>
 </header>
-
 <div class="controls">
 <input id="search" placeholder="🔍 Search for a movie..." oninput="render()">
-<select id="cat" onchange="render()"><option value="All">All Categories</option><option value="Animated">Animated</option><option value="Action">Action</option><option value="Family">Family</option></select>
+<select id="cat" onchange="render()"><option value="All">All Categories</option><option value="Animated">Animated</option></select>
 <select id="sort" onchange="render()"><option value="All">All Movies</option><option value="Top">Top Rated</option></select>
 </div>
-
 <div class="grid" id="grid"></div>
 <footer>Curated with 💙 by CineVault • Discover • Watch • Remember</footer>
-
 <script>
 const movies=[
-{title:"Moana",year:2016,category:"Animated",rating:7.6,poster:"https://image.tmdb.org/t/p/w500/4Iu5f2nv7huqJv1fTRK7M0R6T.jpg",desc:"A brave girl sails across the ocean to save her island."},
-{title:"Mulan",year:1998,category:"Animated",rating:7.6,poster:"https://image.tmdb.org/t/p/w500/7k1JxW6hCgDq1LqD2GqC9C9x.jpg",desc:"A brave young woman disguises herself to take her father's place in the army."},
-{title:"Brave",year:2012,category:"Animated",rating:7.1,poster:"https://image.tmdb.org/t/p/w500/jQpjIr4W4U8f5C8YPouDAcHoVuE.jpg",desc:"A Scottish princess must break a spell and mend her bond with her mother."},
-{title:"Zootopia",year:2016,category:"Animated",rating:8.0,poster:"https://image.tmdb.org/t/p/w500/esbfojkHBEyMlIcv2VGW3fCzlzH.jpg",desc:"A bunny cop and a fox team up in a city of animals."},
-{title:"Ratatouille",year:2007,category:"Animated",rating:8.0,poster:"https://image.tmdb.org/t/p/w500/t3vaWRPSYH8Sx9dXh9q7k8M61k.jpg",desc:"A rat who dreams of becoming a great chef in Paris."},
-{title:"Coco",year:2017,category:"Animated",rating:8.4,poster:"https://image.tmdb.org/t/p/w500/gGEsAgQTvD5YQ89bSx5MCRWnD5k.jpg",desc:"A boy journeys to the Land of the Dead to find his idol."},
-{title:"Tangled",year:2010,category:"Animated",rating:7.7,poster:"https://image.tmdb.org/t/p/w500/ym7Kst6a4uodryxO9nX0m3dFg.jpg",desc:"Rapunzel escapes her tower with a charming thief."},
-{title:"Beauty and the Beast",year:1991,category:"Animated",rating:8.0,poster:"https://image.tmdb.org/t/p/w500/5ed6d2f66767dfc5ea3cba16504d9b.jpg",desc:"Belle falls for a prince trapped as a Beast."},
-{title:"How to Train Your Dragon",year:2010,category:"Animated",rating:8.1,poster:"https://image.tmdb.org/t/p/w500/xvYxM7JcRCK2C5Q8vYhZ8sC1E.jpg",desc:"Hiccup befriends a Night Fury dragon."},
-{title:"Spider-Man: Into the Spider-Verse",year:2018,category:"Animated",rating:8.4,poster:"https://image.tmdb.org/t/p/w500/5AxLiAVJ4qxGDqoudHKHQNCmCgd.jpg",desc:"Miles Morales becomes Spider-Man across dimensions."},
-{title:"Inside Out",year:2015,category:"Animated",rating:8.1,poster:"https://image.tmdb.org/t/p/w500/aAmfIX3TT40zUHVTuB7kV9HhC0H.jpg",desc:"Emotions inside a girl's mind go on an adventure."},
-{title:"The Lion King",year:1994,category:"Animated",rating:8.5,poster:"https://image.tmdb.org/t/p/w500/sKCr78MXSLixwmZ8DyJLrpMsd15.jpg",desc:"Simba must reclaim his place as king."},
-{title:"Up",year:2009,category:"Animated",rating:8.2,poster:"https://image.tmdb.org/t/p/w500/vpbaStTMt8qqXaEgnOR2EE4DNt.jpg",desc:"An old man flies his house to Paradise Falls with balloons."},
-{title:"Toy Story",year:1995,category:"Animated",rating:8.3,poster:"https://image.tmdb.org/t/p/w500/uXDfjJbdP4ijW5hWSBrPrlKpx.jpg",desc:"Woody and Buzz learn to be friends."},
-{title:"Finding Nemo",year:2003,category:"Animated",rating:8.1,poster:"https://image.tmdb.org/t/p/w500/eLxPgjSMPJQw5BZz2yE9y8Xz.jpg",desc:"A clownfish searches the ocean for his son."},
-{title:"Shrek",year:2001,category:"Animated",rating:7.9,poster:"https://image.tmdb.org/t/p/w500/iBholKfT2G7a3P0h5YF0F.jpg",desc:"An ogre goes on a quest to save a princess."}
-];
-
-function render(){
-let q=document.getElementById('search').value.toLowerCase();
-let c=document.getElementById('cat').value;
-let s=document.getElementById('sort').value;
-let list=movies.filter(m=>(c==="All"||m.category===c)&&m.title.toLowerCase().includes(q));
-if(s==="Top") list=[...list].sort((a,b)=>b.rating-a.rating);
-document.getElementById('grid').innerHTML=list.map(m=>`
-<div class="card">
-<img src="${m.poster}" alt="${m.title}" onerror="this.src='https://via.placeholder.com/500x750?text=${encodeURIComponent(m.title)}'">
-<div class="card-body"><h3>${m.title}</h3><p>${m.year} • ⭐ ${m.rating}</p><p>${m.desc}</p><span class="badge">${m.category}</span></div>
-</div>`).join('');
-}
-render();
-</script>
-</body>
-</html>
+{title:"Moana",year:2016,category:"Animated",rating:7.6,posters:["https://upload.wikimedia.org/wikipedia/en/4/4a/Moana_Teaser_Poster.jpg","https://image.tmdb.org/t/p/w500/4Iu5f2nv7huqJv1fTRK7M0R6T.jpg"],desc:"A brave girl sails across the ocean to save her island."},
+{title:"Mulan",year:1998,category:"Animated",rating:7.6,posters:["https://upload.wikimedia.org/wikipedia/en/a/ae/Movie_poster_mulan.JPG","https://image.tmdb.org/t/p/w500/5TYgKxYd1Fh5YF0F.jpg"],desc:"A brave young woman takes her father's place in the army."},
+{title:"Brave",year:2012,category:"Animated",rating:7.1,posters:["https://upload.wikimedia.org/wikipedia/en/9/96/Brave_Poster.jpg","https://image.tmdb.org/t/p/w500/jQpjIr4W4U8f5C8YPouDAcHoVuE.jpg"],desc:"A Scottish princess must break a spell and mend her bond with her mother."},
+{title:"Zootopia",year:2016,category:"Animated",rating:8.0,posters:["https://image.tmdb.org/t/p/w500/esbfojkHBEyMlIcv2VGW3fCzlzH.jpg","https://upload.wikimedia.org/wikipedia/en/9/96/Zootopia_poster.jpg"],desc:"A bunny cop and a fox team up in a city of animals."},
+{title:"Ratatouille",year:2007,category:"Animated",rating:8.0,posters:["https://upload.wikimedia.org/wikipedia/en/5/50/RatatouillePoster.jpg","https://image.tmdb.org/t/p/w500/t3vaWRPSYH8Sx9dXh9q7k8M61k.jpg"],desc:"A rat who dreams of becoming a great chef in Paris."},
+{title:"Coco",year:2017,category:"Animated",rating:8.4,posters:["https://upload.wikimedia.org/wikipedia/en/9/9d/Coco_%282017_film%29_poster.jpg","https://image.tmdb.org/t/p/w500/gGEsAgQTvD5YQ89bSx5MCRWnD5k.jpg"],desc:"A boy journeys to the Land of the Dead to find his idol."},
+{title:"Tangled",year:2010,category:"Animated",rating:7.7,posters:["https://upload.wikimedia.org/wikipedia/en/4/4d/Tangled_poster.jpg","https://image.tmdb.org/t/p/w500/ym7Kst6a4uodryxO9nX0m3dFg.jpg"],desc:"Rapunzel escapes her tower with a charming thief."},
+{title:"Beauty and the Beast",year:1991,category:"Animated",rating:8.0,posters:["https://upload.wikimedia.org/wikipedia/en/6/6e/Beauty_and_the_Beast_1991_poster.jpg","https://image.tmdb.org/t/p/w500/5ed6d2f66767dfc5ea3cba16504d9b.jpg"],desc:"Belle falls for a prince trapped as a Beast."},
+{title:"How to Train Your Dragon",year:2010,category:"Animated",rating:8.1,posters:["https://upload.wikimedia.org/wikipedia/en/9/99/How_to_Train_Your_Dragon_Poster.jpg","https://image.tmdb.org/t/p/w500/xvYxM7JcRCK2C5Q8vYhZ8sC1E.jpg"],desc:"Hiccup befriends a Night Fury dragon."},
+{title:"Spider-Man: Into the Spider-Verse",year:2018,category:"Animated",rating:8.4,posters:["https://upload.wikimedia.org/wikipedia/en/1/18/Spider-Man_Into_the_Spider-Verse_poster.jpg","https://image.tmdb.org/t/p/w500/5AxLiAVJ4qxGDqoudHKHQNCmCgd.jpg"],desc:"Miles Morales becomes Spider-Man across dimensions."},
+{title:"Inside Out",year:2015,category:"Animated",rating:8.1,posters:["https://upload.wikimedia.org/wikipedia/en/0/0a/Inside_Out_%282015_film%29_poster.jpg","https://image.tmdb.org/t/p/w500/aAmfIX3TT40zUHVTuB7kV9HhC0H.jpg"],desc:"Emotions inside a girl's mind go on an adventure."},
+{title:"The Lion King",year:1994,category:"Animated",rating:8.5,posters:["https://upload.wikimedia.org/wikipedia/en/3/3d/Lion_King_poster.jpg","https://image.tmdb.org/t/p/w500/sKCr78MXSLixwmZ8DyJLrpMsd15.jpg"],desc:"Simba must reclaim his place as king."},
+{title:"Up",year:2009,category:"Animated",rating:8.2,posters:["https://upload.wikimedia.org/wikipedia/en/2/27/Up_%282009_film%29.jpg","https://image.tmdb.org/t/p/w500/vpbaStTMt8qqXaEgnOR2EE4DNt.jpg"],desc
