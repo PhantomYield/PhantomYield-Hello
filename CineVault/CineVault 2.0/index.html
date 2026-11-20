@@ -3,71 +3,77 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CineVault - Your Movie Vault</title>
+<title>CineVault - Every movie has a home</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#0f0f1a;color:white;padding:20px}
-body.light{background:#f5f5f5;color:#111}
-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px;margin-bottom:20px}
-h1{font-size:32px} h1 span{color:#ff3d68}
-input{padding:12px 15px;border-radius:25px;border:none;width:280px;outline:none}
-button{padding:10px 18px;border-radius:20px;border:none;background:#ff3d68;color:white;cursor:pointer;font-weight:bold}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:20px}
-.card{background:#1e1e30;border-radius:15px;overflow:hidden;padding-bottom:12px}
-body.light .card{background:white;box-shadow:0 2px 10px rgba(0,0,0,.1)}
-.card img{width:100%;height:300px;object-fit:cover;background:#333}
-.card h3{padding:10px 10px 0;font-size:17px}
-.card p{padding:5px 10px;font-size:13px;opacity:.8}
-.badge{display:inline-block;background:#ff3d68;color:white;padding:3px 8px;border-radius:10px;font-size:12px;margin:5px 10px}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{background:#f8f9ff;color:#222;padding:20px}
+body.dark{background:#12121c;color:#fff}
+header{max-width:1100px;margin:0 auto 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.logo{font-size:32px;font-weight:900;color:#4a4de6}
+.logo span{font-size:14px;font-weight:400;color:#888;display:block}
+button{cursor:pointer;border:0;border-radius:999px;padding:10px 18px;font-weight:700}
+.dark-btn{background:#aab0ff;color:#222}
+.controls{max-width:1100px;margin:0 auto 20px;display:flex;gap:10px;flex-wrap:wrap}
+.controls input,.controls select{padding:12px 16px;border:1px solid #ddd;border-radius:999px;flex:1;min-width:180px}
+.grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:18px}
+.card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.08)}
+body.dark .card{background:#1e1e2e}
+.card img{width:100%;height:270px;object-fit:cover;display:block;background:#ddd}
+.card-body{padding:12px}
+.card-body h3{font-size:16px;margin-bottom:4px}
+.card-body p{font-size:13px;color:#777}
+.badge{display:inline-block;background:#ffeef0;color:#d6336c;padding:4px 8px;border-radius:999px;font-size:12px;font-weight:700;margin-top:8px}
+footer{text-align:center;color:#999;margin-top:30px;font-size:13px}
 </style>
 </head>
 <body>
 <header>
-<div><h1>🎬 Cine<span>Vault</span></h1><p>Your personal movie collection</p></div>
-<input id="search" placeholder="🔍 Search movies..." oninput="searchMovie()">
-<button onclick="toggleDark()">🌙 Dark / Light</button>
+<div class="logo">🎬 CineVault<span>Every movie has a home 💙</span></div>
+<button class="dark-btn" onclick="document.body.classList.toggle('dark')">🌙 Dark Mode</button>
 </header>
+
+<div class="controls">
+<input id="search" placeholder="🔍 Search for a movie..." oninput="render()">
+<select id="cat" onchange="render()"><option value="All">All Categories</option><option value="Animated">Animated</option><option value="Action">Action</option><option value="Family">Family</option></select>
+<select id="sort" onchange="render()"><option value="All">All Movies</option><option value="Top">Top Rated</option></select>
+</div>
+
 <div class="grid" id="grid"></div>
+<footer>Curated with 💙 by CineVault • Discover • Watch • Remember</footer>
 
 <script>
 const movies=[
-{title:"The Princess and the Frog",year:2009,category:"Animated",rating:7.1,poster:"https://upload.wikimedia.org/wikipedia/en/8/81/The_Princess_and_the_Frog_poster.jpg",description:"A princess, a dream and a little magic."},
-https://upload.wikimedia.org/wikipedia/en/2/2a/Enchantedposter.jpg
-https://i.pinimg.com/originals/14/7b/0a/147b0a8d61aac202c37704ebe8d8e2c6.jpg
-{title:"Moana",year:2016,category:"Animated",rating:7.6,poster:"https://upload.wikimedia.org/wikipedia/en/2/26/Moana_Teaser_Poster.jpg",description:"A brave girl sails to save her island."},
-{title:"Frozen",year:2013,category:"Animated",rating:7.2,poster:"https://upload.wikimedia.org/wikipedia/en/0/05/Frozen_%282013_film%29_poster.jpg",description:"Two sisters, one frozen kingdom."},
-https://upload.wikimedia.org/wikipedia/en/9/98/Coco_%282017_film%29_poster.jpg
-{title:"Toy Story",year:1995,category:"Animated",rating:8.3,poster:"https://upload.wikimedia.org/wikipedia/en/1/13/Toy_Story.jpg",description:"Toys come to life when no one is looking."},
-{title:"Finding Nemo",year:2003,category:"Animated",rating:8.2,poster:"https://upload.wikimedia.org/wikipedia/en/a/a2/Finding_Nemo.jpg",description:"A dad crosses the ocean to find his son."},
-{title:"Shrek",year:2001,category:"Animated",rating:8.2,poster:"https://upload.wikimedia.org/wikipedia/en/7/7b/Shrek_%282001_animated_feature_film%29.jpg",description:"An ogre, a donkey and a rescue mission."},
-{title:"The Lion King",year:1994,category:"Animated",rating:8.5,poster:"https://upload.wikimedia.org/wikipedia/en/3/3d/The_Lion_King_poster.jpg",description:"Simba must take his place as king."},
-https://i.pinimg.com/originals/5e/d6/72/5ed672311f067ddfc5ea3cba16504d9b.jpg{title:"Tangled",year:2010,category:"Animated",rating:7.7,poster:"
-https://upload.wikimedia.org/wikipedia/en/a/a8/Tangled_poster.jpg",description:"Rapunzel escapes her tower."},
-{title:"Inside Out",year:2015,category:"Animated",rating:8.1,poster:"https://upload.wikimedia.org/wikipedia/en/0/0a/Inside_Out_%282015_film%29_poster.jpg",description:"Emotions inside a girl's mind."},
-{title:"Up",year:2009,category:"Animated",rating:8.3,poster:"https://upload.wikimedia.org/wikipedia/en/0/05/Up_%282009_film%29.jpg",description:"A house flies away with balloons."},
-{title:"Ratatouille",year:2007,category:"Animated",rating:8.0,poster:"https://upload.wikimedia.org/wikipedia/en/5/50/RatatouillePoster.jpg",description:"A rat who wants to be a chef."},
-https://image.tmdb.org/t/p/w500/esbfojkHBEyMlIcv2VGW3fCzlzH.jpg
-{title:"Brave",year:2012,category:"Animated",rating:7.1,poster:"https://image.tmdb.org/t/p/w500/jQpjIr4W4U8f5C8YPouDAcHoVuE.jpg,description:{"A princess fights for her freedom."},
-{title:"How to Train Your Dragon",year:2010,category:"Animated",rating:8.1,poster:"https://upload.wikimedia.org/wikipedia/en/9/99/How_to_Train_Your_Dragon_Poster.jpg",description:"A boy befriends a dragon."},
-{title:"Spider-Man: Into the Spider-Verse",year:2018,category:"Animated",rating:8.4,poster:"https://image.tmdb.org/t/p/w500/5AxLiAVJ4qxGDqoudHKHQNCmCgd.jpg://upload.wikimedia.org/wikipedia/en/f/fb/Spider-Man_Into_the_Spider-Verse_poster.png",description:"Miles Morales becomes Spider-Man."}
+{title:"Moana",year:2016,category:"Animated",rating:7.6,poster:"https://image.tmdb.org/t/p/w500/4Iu5f2nv7huqJv1fTRK7M0R6T.jpg",desc:"A brave girl sails across the ocean to save her island."},
+{title:"Mulan",year:1998,category:"Animated",rating:7.6,poster:"https://image.tmdb.org/t/p/w500/7k1JxW6hCgDq1LqD2GqC9C9x.jpg",desc:"A brave young woman disguises herself to take her father's place in the army."},
+{title:"Brave",year:2012,category:"Animated",rating:7.1,poster:"https://image.tmdb.org/t/p/w500/jQpjIr4W4U8f5C8YPouDAcHoVuE.jpg",desc:"A Scottish princess must break a spell and mend her bond with her mother."},
+{title:"Zootopia",year:2016,category:"Animated",rating:8.0,poster:"https://image.tmdb.org/t/p/w500/esbfojkHBEyMlIcv2VGW3fCzlzH.jpg",desc:"A bunny cop and a fox team up in a city of animals."},
+{title:"Ratatouille",year:2007,category:"Animated",rating:8.0,poster:"https://image.tmdb.org/t/p/w500/t3vaWRPSYH8Sx9dXh9q7k8M61k.jpg",desc:"A rat who dreams of becoming a great chef in Paris."},
+{title:"Coco",year:2017,category:"Animated",rating:8.4,poster:"https://image.tmdb.org/t/p/w500/gGEsAgQTvD5YQ89bSx5MCRWnD5k.jpg",desc:"A boy journeys to the Land of the Dead to find his idol."},
+{title:"Tangled",year:2010,category:"Animated",rating:7.7,poster:"https://image.tmdb.org/t/p/w500/ym7Kst6a4uodryxO9nX0m3dFg.jpg",desc:"Rapunzel escapes her tower with a charming thief."},
+{title:"Beauty and the Beast",year:1991,category:"Animated",rating:8.0,poster:"https://image.tmdb.org/t/p/w500/5ed6d2f66767dfc5ea3cba16504d9b.jpg",desc:"Belle falls for a prince trapped as a Beast."},
+{title:"How to Train Your Dragon",year:2010,category:"Animated",rating:8.1,poster:"https://image.tmdb.org/t/p/w500/xvYxM7JcRCK2C5Q8vYhZ8sC1E.jpg",desc:"Hiccup befriends a Night Fury dragon."},
+{title:"Spider-Man: Into the Spider-Verse",year:2018,category:"Animated",rating:8.4,poster:"https://image.tmdb.org/t/p/w500/5AxLiAVJ4qxGDqoudHKHQNCmCgd.jpg",desc:"Miles Morales becomes Spider-Man across dimensions."},
+{title:"Inside Out",year:2015,category:"Animated",rating:8.1,poster:"https://image.tmdb.org/t/p/w500/aAmfIX3TT40zUHVTuB7kV9HhC0H.jpg",desc:"Emotions inside a girl's mind go on an adventure."},
+{title:"The Lion King",year:1994,category:"Animated",rating:8.5,poster:"https://image.tmdb.org/t/p/w500/sKCr78MXSLixwmZ8DyJLrpMsd15.jpg",desc:"Simba must reclaim his place as king."},
+{title:"Up",year:2009,category:"Animated",rating:8.2,poster:"https://image.tmdb.org/t/p/w500/vpbaStTMt8qqXaEgnOR2EE4DNt.jpg",desc:"An old man flies his house to Paradise Falls with balloons."},
+{title:"Toy Story",year:1995,category:"Animated",rating:8.3,poster:"https://image.tmdb.org/t/p/w500/uXDfjJbdP4ijW5hWSBrPrlKpx.jpg",desc:"Woody and Buzz learn to be friends."},
+{title:"Finding Nemo",year:2003,category:"Animated",rating:8.1,poster:"https://image.tmdb.org/t/p/w500/eLxPgjSMPJQw5BZz2yE9y8Xz.jpg",desc:"A clownfish searches the ocean for his son."},
+{title:"Shrek",year:2001,category:"Animated",rating:7.9,poster:"https://image.tmdb.org/t/p/w500/iBholKfT2G7a3P0h5YF0F.jpg",desc:"An ogre goes on a quest to save a princess."}
 ];
 
-function show(list){
-document.getElementById("grid").innerHTML=list.map(m=>`
+function render(){
+let q=document.getElementById('search').value.toLowerCase();
+let c=document.getElementById('cat').value;
+let s=document.getElementById('sort').value;
+let list=movies.filter(m=>(c==="All"||m.category===c)&&m.title.toLowerCase().includes(q));
+if(s==="Top") list=[...list].sort((a,b)=>b.rating-a.rating);
+document.getElementById('grid').innerHTML=list.map(m=>`
 <div class="card">
-<img src="${m.poster}" onerror="this.src='https://via.placeholder.com/300x450?text=${encodeURIComponent(m.title)}'">
-<h3>${m.title}</h3>
-<p>⭐ ${m.rating} • ${m.year}</p>
-<span class="badge">${m.category}</span>
-<p>${m.description}</p>
-</div>`).join("");
+<img src="${m.poster}" alt="${m.title}" onerror="this.src='https://via.placeholder.com/500x750?text=${encodeURIComponent(m.title)}'">
+<div class="card-body"><h3>${m.title}</h3><p>${m.year} • ⭐ ${m.rating}</p><p>${m.desc}</p><span class="badge">${m.category}</span></div>
+</div>`).join('');
 }
-function searchMovie(){
-let q=document.getElementById("search").value.toLowerCase();
-show(movies.filter(m=>m.title.toLowerCase().includes(q)));
-}
-function toggleDark(){document.body.classList.toggle("light");}
-show(movies);
+render();
 </script>
 </body>
 </html>
