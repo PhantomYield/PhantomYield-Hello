@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CineVault | Every Movie Has a Home</title>
+
+<style>
+
+/* ===== COLOUR THEME ===== */
+
+:root {
+  --accent: #9673D1;
+  --accent-dark: #7652AE;
+  --background: #F3EDFF;
+  --card: #FFFFFF;
+  --text: #302344;
+  --muted: #80738F;
+  --shadow: rgba(100, 70, 150, 0.12);
+}
+
+body.dark {
+  --accent: #B18AE8;
+  --accent-dark: #9673D1;
+  --background: #171326;
+  --card: #29213D;
+  --text: #FFFFFF;
+  --muted: #C8B9DF;
+  --shadow: rgba(0, 0, 0, 0.3);
+}
+
+/* ===== GENERAL STYLING ===== */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background: var(--background);
+  color: var(--text);
+  transition: 0.3s;
+}
+
+button, input, select {
+  font-family: inherit;
+}
+
+/* ===== HEADER ===== */
+
+header {
+  text-align: center;
+  padding: 25px 10px;
+}
+
+.logo {
+  font-size: 38px;
+  font-weight: bold;
+  color: var(--accent-dark);
+  margin-bottom: 8px;
+}
+
+.tagline {
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.movie-count {
+  color: var(--accent-dark);
+  font-size: 13px;
+  font-weight: bold;
+}
+
+/* ===== CONTROLS ===== */
+
+.controls {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 25px auto;
+  max-width: 1000px;
+}
+
+input, select {
+  padding: 12px 16px;
+  border: 1px solid #D9C8F5;
+  border-radius: 25px;
+  outline: none;
+  background: var(--card);
+  color: var(--text);
+  font-size: 14px;
+}
+
+input:focus, select:focus {
+  border-color: var(--accent);
+}
+
+#search {
+  width: 260px;
+  max-width: 100%;
+}
+
+/* ===== BUTTONS ===== */
+
+button {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 11px 18px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: var(--accent-dark);
+  transform: scale(1.03);
+}
+
+/* ===== MOVIE COLLECTION ===== */
+
+#movieContainer {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(210px, 1fr)
+  );
+  gap: 25px;
+  max-width: 1100px;
+  margin: 30px auto;
+}
+
+/* ===== MOVIE CARDS ===== */
+
+.card {
+  background: var(--card);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 5px 18px var(--shadow);
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-7px);
+}
+
+.poster {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  background: #E5D9F5;
+}
+
+.card-content {
+  padding: 16px;
+  text-align: center;
+}
+
+.card h2 {
+  font-size: 19px;
+  margin: 5px 0;
+}
+
+.details {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.rating {
+  color: #B18AE8;
+  font-size: 19px;
+  margin: 12px;
+}
+
+.description {
+  font-size: 14px;
+  color: var(--muted);
+  min-height: 35px;
+}
+
+.status {
+  margin-top: 10px;
+  width: 100%;
+}
+
+/* ===== EMPTY SEARCH ===== */
+
+.empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px;
+  color: var(--muted);
+}
+
+/* ===== FOOTER ===== */
+
+footer {
+  text-align: center;
+  margin: 55px 0 15px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* ===== MOBILE DESIGN ===== */
+
+@media(max-width: 500px) {
+
+  body {
+    padding: 12px;
+  }
+
+  .logo {
+    font-size: 30px;
+  }
+
+  #movieContainer {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .poster {
+    height: 220px;
+  }
+
+  .card-content {
+    padding: 10px;
+  }
+
+  .card h2 {
+    font-size: 16px;
+  }
+
+  .controls {
+    gap: 8px;
+  }
+
+  #search {
+    width: 100%;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ===== HEADER ===== -->
+
+<header>
+
+  <div class="logo">
+    🎬 CineVault
+  </div>
+
+  <p class="tagline">
+    Every movie has a home. 💜
+  </p>
+
+  <p class="movie-count" id="movieCount"></p>
+
+</header>
+
+
+<!-- ===== SEARCH AND FILTERS ===== -->
+
+<div class="controls">
+
+  <input
+    type="text"
+    id="search"
+    placeholder="🔍 Search for a movie..."
+  >
+
+  <select id="category">
+    <option value="all">All Categories</option>
+    <option value="Animated">Animated</option>
+    <option value="Rom-Com">Rom-Com</option>
+  </select>
+
+  <select id="statusFilter">
+    <option value="all">All Movies</option>
+    <option value="Watched">Watched</option>
+    <option value="Want to Watch">Want to Watch</option>
+  </select>
+
+  <button onclick="toggleDarkMode()" id="themeButton">
+    🌙 Dark Mode
+  </button>
+
+</div>
+
+
+<!-- ===== MOVIE COLLECTION ===== -->
+
+<div id="movieContainer"></div>
+
+
+<!-- ===== FOOTER ===== -->
+
+<footer>
+  Curated with 💜 by CineVault
+  <br><br>
+  Discover • Watch • Remember
+</footer>
+
+
+<!-- ===== JAVASCRIPT ===== -->
+
+<script>
+
+// MOVIE DATABASE
+
+const movies = [
+
+  {
+    title: "Coco",
+    category: "Animated",
+    year: 2017,
+    rating: 8.4,
+    description: "A beautiful story about family and music.",
+    poster: "https://image.tmdb.org/t/p/w500/gGEsBPAijhVUFoiNpgZXqRVWJt2.jpg"
+  },
+
+  {
+    title: "Notting Hill",
+    category: "Rom-Com",
+    year: 1999,
+    rating: 7.2,
+    description: "A charming love story in London.",
+    poster: "https://image.tmdb.org/t/p/w500/l5uxY5m5OInWpcExIpKG6AR3rgL.jpg"
+  },
+
+  {
+    title: "Inside Out 2",
+    category: "Animated",
+    year: 2024,
+    rating: 7.6,
+    description: "All the emotions are back!",
+    poster: "https://image.tmdb.org/t/p/w500/vpnVM9B6NMmQpWeZvzLvDESb2QY.jpg"
+  },
+
+  {
+    title: "Tangled",
+    category: "Animated",
+    year: 2010,
+    rating: 7.7,
+    description: "A magical adventure with Rapunzel.",
+    poster: "https://image.tmdb.org/t/p/w500/ym7Kst6a4uodryxqbGOxmewF235.jpg"
+  },
+
+ {
+  title: "The Princess and the Frog",
+  category: "Animated",
+  year: 2009,
+  rating: 7.1,
+  description: "A princess, a dream and a little magic.",
+https://upload.wikimedia.org/wikipedia/en/8/81/The_Princess_and_the_Frog_poster.jpg},
+  {
+    title: "Enchanted",
+    category: "Rom-Com",
+    year: 2007,
+    rating: 7.1,
+    description: "Fairytale magic meets real life.",
+    poster: "https://image.tmdb.org/t/p/w500/8KCNzCArLlvLdQoHx6npua2VSVc.jpg"
+  }
+
+];
+
+
+// LOAD SAVED WATCH STATUS
+
+let watched = JSON.parse(
+  localStorage.getItem("cineVaultStatuses") || "{}"
+);
+
+
+// DISPLAY MOVIES
+
+function displayMovies() {
+
+  const search = document
+    .getElementById("search")
+    .value.toLowerCase();
+
+  const category = document
+    .getElementById("category").value;
+
+  const statusFilter = document
+    .getElementById("statusFilter").value;
+
+  const container = document
+    .getElementById("movieContainer");
+
+  const filtered = movies.filter(movie => {
+
+    const movieStatus =
+      watched[movie.title] || "Want to Watch";
+
+    return (
+
+      movie.title.toLowerCase().includes(search) &&
+
+      (
+        category === "all" ||
+        movie.category === category
+      ) &&
+
+      (
+        statusFilter === "all" ||
+        movieStatus === statusFilter
+      )
+
+    );
+
+  });
+
+
+  document.getElementById("movieCount").textContent =
+    `${filtered.length} movies in your collection`;
+
+
+  if (filtered.length === 0) {
+
+    container.innerHTML = `
+      <p class="empty">
+        No movies found. Try another search! 💜
+      </p>
+    `;
+
+    return;
+
+  }
+
+
+  container.innerHTML = filtered.map(movie => {
+
+    const status =
+      watched[movie.title] || "Want to Watch";
+
+
+    return `
+
+      <div class="card">
+
+        <img
+          class="poster"
+          src="${movie.poster}"
+          alt="${movie.title} poster"
+          onerror="this.onerror=null;this.src='https://placehold.co/400x600/9673D1/FFFFFF?text=Movie+Poster';"
+        >
+
+        <div class="card-content">
+
+          <h2>${movie.title}</h2>
+
+          <p class="details">
+            ${movie.category} • ${movie.year}
+          </p>
+
+          <p class="rating">
+            ⭐ ${movie.rating}/10
+          </p>
+
+          <p class="description">
+            ${movie.description}
+          </p>
+
+          <button
+            class="status"
+            onclick="toggleWatched('${movie.title}')"
+          >
+            ${
+              status === "Watched"
+              ? "Watched ✅"
+              : "Want to Watch 👀"
+            }
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+  }).join("");
+
+}
+
+
+// CHANGE WATCH STATUS
+
+function toggleWatched(title) {
+
+  const current =
+    watched[title] || "Want to Watch";
+
+
+  watched[title] =
+    current === "Watched"
+    ? "Want to Watch"
+    : "Watched";
+
+
+  localStorage.setItem(
+    "cineVaultStatuses",
+    JSON.stringify(watched)
+  );
+
+
+  displayMovies();
+
+}
+
+
+// DARK MODE
+
+function toggleDarkMode() {
+
+  document.body.classList.toggle("dark");
+
+  const isDark =
+    document.body.classList.contains("dark");
+
+  localStorage.setItem(
+    "cineVaultDarkMode",
+    isDark
+  );
+
+  document.getElementById("themeButton").textContent =
+    isDark ? "☀️ Light Mode" : "🌙 Dark Mode";
+
+}
+
+
+// RESTORE DARK MODE
+
+if (
+  localStorage.getItem("cineVaultDarkMode") === "true"
+) {
+
+  document.body.classList.add("dark");
+
+  document.getElementById("themeButton").textContent =
+    "☀️ Light Mode";
+
+}
+
+
+// SEARCH FUNCTION
+
+document.getElementById("search")
+  .addEventListener("input", displayMovies);
+
+
+// CATEGORY FILTER
+
+document.getElementById("category")
+  .addEventListener("change", displayMovies);
+
+
+// WATCH STATUS FILTER
+
+document.getElementById("statusFilter")
+  .addEventListener("change", displayMovies);
+
+
+// START WEBSITE
+
+displayMovies();
+
+</script>
+
+</body>
+</html>
